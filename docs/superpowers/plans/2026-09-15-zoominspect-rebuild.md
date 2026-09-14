@@ -577,29 +577,42 @@ git commit -m "feat: add shared site data (services, industries, nav, contact in
 
 ---
 
-### Task 4: Brand theme (Tailwind config, fonts, global styles)
+### Task 4: Brand theme (Tailwind theme tokens, fonts, global styles)
+
+> **Ruling (pre-flight, recorded in the SDD ledger):** Task 1's actual
+> `create-next-app` output uses **Tailwind CSS v4's config-less setup**
+> (`@import "tailwindcss";` + an `@theme inline { ... }` block in
+> `app/globals.css`) — there is no `tailwind.config.ts` file in this
+> project. This task's original text (written against Tailwind v3)
+> targeted a `tailwind.config.ts` that doesn't exist. The steps below
+> are corrected to add the brand color tokens via the v4 `@theme` block
+> instead. Do not create a `tailwind.config.ts` file.
 
 **Files:**
-- Modify: `tailwind.config.ts`
 - Modify: `app/globals.css`
 
 **Interfaces:**
 - Produces: Tailwind color tokens `brand-navy`, `brand-gold`, `brand-orange` usable as `bg-brand-navy`, `text-brand-gold`, etc. in every later component/page task.
 
-- [ ] **Step 1: Extend the Tailwind theme with brand colors**
+- [ ] **Step 1: Extend the Tailwind v4 theme with brand colors**
 
-Modify `tailwind.config.ts` — inside `theme.extend`, add:
-```typescript
-colors: {
-  "brand-navy": "#0B4F71",
-  "brand-gold": "#F5A623",
-  "brand-orange": "#F2871F",
-},
+Modify `app/globals.css` — inside the existing `@theme inline { ... }` block (added by `create-next-app`, currently defining `--color-background`, `--color-foreground`, `--font-sans`, `--font-mono`), add three more color custom properties:
+```css
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-brand-navy: #0B4F71;
+  --color-brand-gold: #F5A623;
+  --color-brand-orange: #F2871F;
+}
 ```
+Tailwind v4 generates utility classes (`bg-brand-navy`, `text-brand-navy`, `border-brand-gold`, etc.) automatically from any `--color-*` custom property inside `@theme`.
 
 - [ ] **Step 2: Set base typography and background in globals**
 
-Modify `app/globals.css` — after the Tailwind directives, add:
+Modify `app/globals.css` — replace the existing plain-CSS `body { ... }` rule (which currently sets `background`/`color` from the light/dark CSS variables and a generic font-family) with:
 ```css
 body {
   @apply bg-white text-slate-700 antialiased;
@@ -609,6 +622,7 @@ h1, h2, h3, h4 {
   @apply text-brand-navy font-semibold;
 }
 ```
+This site has one fixed light/brand-colored look (no dark-mode variant), so it's fine that this stops using the `--background`/`--foreground` variables for `body` — leave the `:root` variable declarations and the `@media (prefers-color-scheme: dark)` block in place (harmless now that nothing but `--color-background`/`--color-foreground` in `@theme inline` still reference them).
 
 - [ ] **Step 3: Verify the build still passes**
 
@@ -1169,7 +1183,11 @@ Note: `prose` classes require the Tailwind typography plugin. Install it:
 ```bash
 npm install -D @tailwindcss/typography
 ```
-Modify `tailwind.config.ts` to add `require("@tailwindcss/typography")` to the `plugins` array.
+This project uses Tailwind v4's config-less setup (see Task 4's ruling — there is no `tailwind.config.ts`). Register the plugin in CSS instead: in `app/globals.css`, add a `@plugin` directive right after the `@import "tailwindcss";` line at the top of the file:
+```css
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+```
 
 - [ ] **Step 2: Write the Pre-Shipment Inspection page**
 
