@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { NAV_LINKS } from "@/lib/siteData";
 
@@ -11,8 +12,15 @@ export default function Header() {
   return (
     <header className="border-b border-slate-100">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-        <Link href="/" className="text-xl font-bold text-brand-navy">
-          Zoominspect
+        <Link href="/" className="shrink-0">
+          <Image
+            src="/images/logo.png"
+            alt="Zoominspect — No. 1 Inspection Company in China"
+            width={2917}
+            height={1381}
+            priority
+            className="h-12 w-auto"
+          />
         </Link>
 
         <nav data-testid="desktop-nav" className="hidden items-center gap-6 md:flex">

@@ -1,11 +1,18 @@
+import Image from "next/image";
 import { CONTACT_INFO } from "@/lib/siteData";
 
 export default function Footer() {
   return (
     <footer className="bg-brand-navy text-white">
       <div className="mx-auto max-w-6xl px-4 py-10 text-sm">
-        <p className="text-lg font-semibold">Zoominspect</p>
-        <p className="mt-2 max-w-md text-white/80">
+        <Image
+          src="/images/logo-white.png"
+          alt="Zoominspect"
+          width={2917}
+          height={1381}
+          className="h-12 w-auto"
+        />
+        <p className="mt-4 max-w-md text-white/80">
           No. 1 inspection company in China — quality control, factory audits,
           product sourcing and freight forwarding.
         </p>
