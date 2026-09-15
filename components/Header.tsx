@@ -26,6 +26,8 @@ export default function Header() {
               {link.dropdown ? (
                 <button
                   className="text-sm font-medium text-slate-700 hover:text-brand-navy"
+                  aria-haspopup="menu"
+                  aria-expanded={openDropdown === link.label}
                   onClick={() =>
                     setOpenDropdown(openDropdown === link.label ? null : link.label)
                   }

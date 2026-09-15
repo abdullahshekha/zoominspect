@@ -23,7 +23,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <h1 className="text-3xl">{post.title}</h1>
       <p className="mt-2 text-sm text-slate-500">{post.date}</p>
       <div className="relative mt-6 h-64 w-full overflow-hidden rounded-lg bg-slate-100">
-        <Image src={post.coverImage} alt={post.title} fill className="object-cover" />
+        <Image
+          src={post.coverImage}
+          alt={post.title}
+          fill
+          sizes="(max-width: 768px) 100vw, 768px"
+          className="object-cover"
+        />
       </div>
       <div className="prose prose-slate mt-8 max-w-none">
         <MDXRemote source={post.content} />
