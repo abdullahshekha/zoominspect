@@ -9,6 +9,7 @@ export type Service = {
 export type IndustryGroup = {
   name: string;
   items: string[];
+  icon: string;
 };
 
 export const CONTACT_INFO = {
@@ -97,12 +98,36 @@ export const SERVICES: Service[] = [
 ];
 
 export const INDUSTRIES: IndustryGroup[] = [
-  { name: "Softlines", items: ["Textile & Garments", "Footwear", "Fashion Accessories", "Soft Toys"] },
-  { name: "Hardlines", items: ["Furniture", "Electrical", "Bikes & Sporting Goods", "Hardware"] },
-  { name: "Transportation", items: ["Automotive", "Motorcycle", "E-Mobility", "Parts & Components"] },
-  { name: "Industrial", items: ["Machinery", "Oil & Gas", "Power Equipment", "Metals"] },
-  { name: "Healthcare", items: ["Medical Devices", "Medical Equipment", "Protective Equipment", "Cosmetics"] },
-  { name: "Electronics", items: ["Motors", "Circuits", "Cell Phone/Watches", "Computer Accessories"] },
+  {
+    name: "Softlines",
+    items: ["Textile & Garments", "Footwear", "Fashion Accessories", "Soft Toys"],
+    icon: "/images/site/industries/softlines.png",
+  },
+  {
+    name: "Hardlines",
+    items: ["Furniture", "Electrical", "Bikes & Sporting Goods", "Hardware"],
+    icon: "/images/site/industries/hardlines.png",
+  },
+  {
+    name: "Transportation",
+    items: ["Automotive", "Motorcycle", "E-Mobility", "Parts & Components"],
+    icon: "/images/site/industries/transportation.png",
+  },
+  {
+    name: "Industrial",
+    items: ["Machinery", "Oil & Gas", "Power Equipment", "Metals"],
+    icon: "/images/site/industries/industrial.png",
+  },
+  {
+    name: "Healthcare",
+    items: ["Medical Devices", "Medical Equipment", "Protective Equipment", "Cosmetics"],
+    icon: "/images/site/industries/healthcare.png",
+  },
+  {
+    name: "Electronics",
+    items: ["Motors", "Circuits", "Cell Phone/Watches", "Computer Accessories"],
+    icon: "/images/site/industries/electronics.png",
+  },
 ];
 
 export const NAV_LINKS = [

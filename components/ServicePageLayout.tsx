@@ -100,7 +100,7 @@ export default function ServicePageLayout({
                   alt={badge.alt}
                   width={badge.width}
                   height={badge.height}
-                  className="h-8 w-auto"
+                  className="h-16 w-auto"
                 />
               ))}
             </div>

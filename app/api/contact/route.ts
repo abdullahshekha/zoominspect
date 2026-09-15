@@ -1,15 +1,8 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
-type ContactPayload = {
-  name: string;
-  email: string;
-  whatsapp: string;
-  message: string;
-  honeypot: string;
-};
-
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MAX_FILE_SIZE_BYTES = 4 * 1024 * 1024; // 4MB — stays under typical serverless request body limits
 
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX = 5;
@@ -36,14 +29,23 @@ export async function POST(request: Request) {
     );
   }
 
-  let body: Partial<ContactPayload>;
+  let form: FormData;
   try {
-    body = await request.json();
+    form = await request.formData();
   } catch {
     return NextResponse.json({ ok: false, error: "Invalid request." }, { status: 400 });
   }
 
-  const { name, email, whatsapp, message, honeypot } = body;
+  const name = String(form.get("name") || "").trim();
+  const email = String(form.get("email") || "").trim();
+  const whatsapp = String(form.get("whatsapp") || "").trim();
+  const wechat = String(form.get("wechat") || "").trim();
+  const companyName = String(form.get("companyName") || "").trim();
+  const country = String(form.get("country") || "").trim();
+  const notes = String(form.get("notes") || "").trim();
+  const services = form.getAll("services").map(String);
+  const honeypot = String(form.get("honeypot") || "");
+  const attachment = form.get("attachment");
 
   if (honeypot) {
     return NextResponse.json({ ok: false, error: "Rejected." }, { status: 400 });
@@ -66,11 +68,23 @@ export async function POST(request: Request) {
   if (
     name.length > 200 ||
     email.length > 200 ||
-    (whatsapp && whatsapp.length > 50) ||
-    (message && message.length > 5000)
+    whatsapp.length > 50 ||
+    wechat.length > 50 ||
+    companyName.length > 200 ||
+    country.length > 100 ||
+    notes.length > 5000
   ) {
     return NextResponse.json(
       { ok: false, error: "One or more fields exceed the allowed length." },
+      { status: 400 }
+    );
+  }
+
+  const hasAttachment = attachment instanceof File && attachment.size > 0;
+
+  if (hasAttachment && (attachment as File).size > MAX_FILE_SIZE_BYTES) {
+    return NextResponse.json(
+      { ok: false, error: "Attachment must be smaller than 4MB." },
       { status: 400 }
     );
   }
@@ -85,13 +99,36 @@ export async function POST(request: Request) {
     },
   });
 
+  const lines = [
+    `Name: ${name}`,
+    `Email: ${email}`,
+    `WhatsApp: ${whatsapp || "-"}`,
+    `WeChat ID: ${wechat || "-"}`,
+    `Company Name: ${companyName || "-"}`,
+    `Country: ${country || "-"}`,
+    `Services Interested In: ${services.length ? services.join(", ") : "-"}`,
+    "",
+    "Additional Notes:",
+    notes || "-",
+  ];
+
   try {
+    const mailAttachments = hasAttachment
+      ? [
+          {
+            filename: (attachment as File).name,
+            content: Buffer.from(await (attachment as File).arrayBuffer()),
+          },
+        ]
+      : undefined;
+
     await transporter.sendMail({
       from: process.env.SMTP_USER,
       to: process.env.CONTACT_TO_EMAIL,
       replyTo: email,
       subject: `New enquiry from ${name} via zoominspect.com`,
-      text: `Name: ${name}\nEmail: ${email}\nWhatsApp: ${whatsapp || "-"}\n\nMessage:\n${message || "-"}`,
+      text: lines.join("\n"),
+      attachments: mailAttachments,
     });
   } catch (err) {
     console.error("Failed to send contact form email:", err);
