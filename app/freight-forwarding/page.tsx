@@ -4,7 +4,10 @@ export const metadata = { title: "Freight Forwarding From China | Zoominspect" }
 
 export default function FreightForwardingPage() {
   return (
-    <ServicePageLayout title="Freight Forwarding From China">
+    <ServicePageLayout
+      title="Freight Forwarding From China"
+      bannerImage="/images/site/freight-forwarding-banner.jpg"
+    >
       <p>
         Zoominspect is here to revolutionize your freight forwarding
         experience by offering a seamless and efficient way to transport

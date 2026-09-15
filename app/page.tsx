@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import ServiceCard from "@/components/ServiceCard";
 import IndustryGroup from "@/components/IndustryGroup";
@@ -6,8 +7,16 @@ import { SERVICES, INDUSTRIES } from "@/lib/siteData";
 export default function HomePage() {
   return (
     <>
-      <section className="bg-brand-navy py-20 text-white">
-        <div className="mx-auto max-w-4xl px-4 text-center">
+      <section className="relative overflow-hidden bg-brand-navy py-20 text-white">
+        <Image
+          src="/images/site/home-hero.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover opacity-30"
+        />
+        <div className="relative mx-auto max-w-4xl px-4 text-center">
           <h1 className="text-4xl font-bold text-white md:text-5xl">
             No. 1 Inspection Company In China
           </h1>
@@ -30,32 +39,47 @@ export default function HomePage() {
           Vision For The Future
         </p>
         <h2 className="mt-2 text-center text-3xl">Our Philosophy</h2>
-        <p className="mx-auto mt-4 max-w-2xl text-center text-slate-600">
-          We are your one-stop Quality Partner, ready to deliver an efficient
-          and ever-evolving service that encompasses every aspect of your
-          supply chain. Zoominspect is a leading inspection company in China —
-          we are proud to serve thousands of clients across the world through
-          timely commitments and thorough inspections.
-        </p>
 
-        <div className="mt-10 grid gap-8 md:grid-cols-2">
-          <div>
-            <h3 className="text-xl italic">Our Mission</h3>
-            <p className="mt-2 text-slate-600">
-              Offer Quality Assurance service to our clients — our product
-              experts help you review your product at any production phase
-              and provide a custom solution to any production challenge you
-              might face.
-            </p>
+        <div className="mt-10 grid items-center gap-10 md:grid-cols-2">
+          <div className="relative mx-auto h-96 w-full max-w-sm overflow-hidden rounded-lg md:mx-0">
+            <Image
+              src="/images/site/home-philosophy.jpg"
+              alt="A Zoominspect quality inspector reviewing a product on-site"
+              fill
+              sizes="(max-width: 768px) 100vw, 384px"
+              className="object-cover"
+            />
           </div>
           <div>
-            <h3 className="text-xl italic">Our Vision</h3>
-            <p className="mt-2 text-slate-600">
-              To offer our global network of quality technical experts
-              together with our digital supply chain solutions, delivering a
-              transparent, real-time, total supply chain management
-              experience at minimum cost.
+            <p className="text-slate-600">
+              We are your one-stop Quality Partner, ready to deliver an
+              efficient and ever-evolving service that encompasses every
+              aspect of your supply chain. Zoominspect is a leading
+              inspection company in China — we are proud to serve thousands
+              of clients across the world through timely commitments and
+              thorough inspections.
             </p>
+
+            <div className="mt-8 space-y-6">
+              <div>
+                <h3 className="text-xl italic">Our Mission</h3>
+                <p className="mt-2 text-slate-600">
+                  Offer Quality Assurance service to our clients — our
+                  product experts help you review your product at any
+                  production phase and provide a custom solution to any
+                  production challenge you might face.
+                </p>
+              </div>
+              <div>
+                <h3 className="text-xl italic">Our Vision</h3>
+                <p className="mt-2 text-slate-600">
+                  To offer our global network of quality technical experts
+                  together with our digital supply chain solutions,
+                  delivering a transparent, real-time, total supply chain
+                  management experience at minimum cost.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

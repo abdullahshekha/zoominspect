@@ -23,10 +23,12 @@
   }
 }
 
-body {
-  @apply bg-white text-slate-700 antialiased;
-}
+@layer base {
+  body {
+    @apply bg-white text-slate-700 antialiased;
+  }
 
-h1, h2, h3, h4 {
-  @apply text-brand-navy font-semibold;
+  h1, h2, h3, h4 {
+    @apply text-brand-navy font-semibold;
+  }
 }

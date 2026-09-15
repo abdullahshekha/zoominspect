@@ -4,7 +4,10 @@ export const metadata = { title: "China Patent & Trademark | Zoominspect" };
 
 export default function PatentTrademarkChinaPage() {
   return (
-    <ServicePageLayout title="China Patent / Trademark">
+    <ServicePageLayout
+      title="China Patent / Trademark"
+      bannerImage="/images/site/patent-trademark-banner.jpg"
+    >
       <p>
         Protecting your intellectual property rights in China is no longer
         a luxury; it&apos;s a necessity. As one of the world&apos;s leading
