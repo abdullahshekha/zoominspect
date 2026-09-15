@@ -25,12 +25,27 @@ export default function HomePage() {
             tailored product inspections, factory audits, freight forwarding
             and many other solutions with 100% client satisfaction guaranteed.
           </p>
-          <Link
-            href="/contact"
-            className="mt-8 inline-block rounded-md bg-brand-gold px-6 py-3 font-semibold text-brand-navy"
-          >
-            Get a Quote
-          </Link>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href="#our-solutions"
+              className="inline-block rounded-md border-2 border-white px-6 py-3 font-semibold text-white hover:bg-white hover:text-brand-navy"
+            >
+              Our Services
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-block rounded-md bg-brand-gold px-6 py-3 font-semibold text-brand-navy"
+            >
+              Get a Quote
+            </Link>
+          </div>
+          <Image
+            src="/images/site/badge-helium10.png"
+            alt="Certified and Trusted Partner of Helium 10"
+            width={1201}
+            height={288}
+            className="mx-auto mt-10 h-16 w-auto rounded-md bg-white/90 px-4 py-2"
+          />
         </div>
       </section>
 
@@ -95,6 +110,39 @@ export default function HomePage() {
             {SERVICES.map((service) => (
               <ServiceCard key={service.slug} service={service} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-5xl px-4 py-16">
+        <div className="grid items-center gap-10 md:grid-cols-2">
+          <div className="order-2 md:order-1">
+            <p className="text-sm font-semibold uppercase tracking-wide text-brand-orange">
+              Download
+            </p>
+            <h2 className="mt-2 text-3xl">Our Sample Report</h2>
+            <p className="mt-4 text-slate-600">
+              Detailed and tailor-made. Discover how Zoominspect assesses
+              goods quality and safety when performing an inspection. Review
+              a sample report related to your product of interest.
+            </p>
+            <a
+              href="/documents/sample-inspection-report.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-block rounded-md bg-brand-gold px-6 py-3 font-semibold text-brand-navy"
+            >
+              Download Sample Report
+            </a>
+          </div>
+          <div className="order-1 mx-auto md:order-2">
+            <Image
+              src="/images/site/sample-report-mockup.png"
+              alt="A sample Zoominspect inspection report shown on a tablet"
+              width={809}
+              height={1024}
+              className="h-80 w-auto rounded-lg shadow-lg"
+            />
           </div>
         </div>
       </section>
